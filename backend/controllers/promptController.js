@@ -6,11 +6,12 @@ const { generateLesson } = require("../services/aiService");
 
 const createPrompt = async (req, res, next) => {
   try {
-    const { userId, categoryId, subCategoryId, prompt } = req.body;
+    const { categoryId, subCategoryId, prompt } = req.body;
+    const userId = req.user.userId;
 
-    if (!userId || !categoryId || !subCategoryId || !prompt) {
+    if (!categoryId || !subCategoryId || !prompt) {
       return res.status(400).json({
-        message: "userId, categoryId, subCategoryId and prompt are required"
+        message: "categoryId, subCategoryId and prompt are required"
       });
     }
 
@@ -51,6 +52,15 @@ const getUserPromptHistory = async (req, res, next) => {
   try {
     const { userId } = req.params;
 
+    if (
+      req.user.role !== "admin" &&
+      req.user.userId !== userId
+    ) {
+      return res.status(403).json({
+        message: "Access denied"
+      });
+    }
+
     const history = await Prompt.find({ userId })
       .populate("categoryId")
       .populate("subCategoryId")
@@ -64,13 +74,34 @@ const getUserPromptHistory = async (req, res, next) => {
 
 const getAllPrompts = async (req, res, next) => {
   try {
-    const prompts = await Prompt.find()
-      .populate("userId")
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 5;
+    const userId = req.query.userId;
+
+    const filter = {};
+
+    if (userId) {
+      filter.userId = userId;
+    }
+
+    const skip = (page - 1) * limit;
+
+    const total = await Prompt.countDocuments(filter);
+
+    const prompts = await Prompt.find(filter)
+      .populate("userId", "-password")
       .populate("categoryId")
       .populate("subCategoryId")
-      .sort({ createdAt: -1 });
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
 
-    res.json(prompts);
+    res.json({
+      total,
+      currentPage: page,
+      totalPages: Math.ceil(total / limit),
+      prompts
+    });
   } catch (err) {
     next(err);
   }
