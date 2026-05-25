@@ -79,9 +79,6 @@ StudyMate AI allows students to select a learning category and subcategory, inte
 ### AI Learning Chat
 ![Chat](portfolio-screenshots/localhost_5173__3.png)
 
-### Learning History
-![History](portfolio-screenshots/localhost_5173__4.png)
-
 ### Admin Dashboard
 ![Admin Dashboard](portfolio-screenshots/localhost_5173__5.png)
 
@@ -91,11 +88,7 @@ StudyMate AI allows students to select a learning category and subcategory, inte
 ### User History
 ![User History](portfolio-screenshots/localhost_5173__7.png)
 
-### Add Category
-![Add Category](portfolio-screenshots/localhost_5173__8.png)
 
-### Edit Category
-![Edit Category](portfolio-screenshots/localhost_5173__9.png)
 
 ---
 
