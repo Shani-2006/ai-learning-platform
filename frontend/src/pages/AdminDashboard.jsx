@@ -1,71 +1,44 @@
-import { useEffect, useState } from "react";
-import api from "../api/api";
+import { Link, useNavigate } from "react-router-dom";
+import "./AdminDashboard.css";
 
 function AdminDashboard() {
-  const [users, setUsers] = useState([]);
-  const [prompts, setPrompts] = useState([]);
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    fetchUsers();
-    fetchPrompts();
-  }, []);
-
-  const fetchUsers = async () => {
-    try {
-      const token = localStorage.getItem("token");
-
-      const res = await api.get("/users", {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-
-      setUsers(res.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const fetchPrompts = async () => {
-    try {
-      const token = localStorage.getItem("token");
-
-      const res = await api.get("/prompts/admin/all?page=1&limit=10", {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-
-      setPrompts(res.data.prompts);
-    } catch (err) {
-      console.log(err);
-    }
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/");
   };
 
   return (
-    <div>
-      <h1>Admin Dashboard</h1>
-
-      <h2>Users</h2>
-      {users.map((user) => (
-        <div key={user._id}>
-          <p>
-            {user.name} - {user.phone} ({user.role})
-          </p>
+    <div className="admin-dashboard-page">
+      <header className="admin-dashboard-header">
+        <div>
+          <h1>👩‍💼 Admin Dashboard</h1>
+          <p>Manage users, categories, and learning activity.</p>
         </div>
-      ))}
 
-      <hr />
+        <button onClick={handleLogout}>Logout</button>
+      </header>
 
-      <h2>All Learning Prompts</h2>
-      {prompts.map((item) => (
-        <div key={item._id}>
-          <h3>{item.prompt}</h3>
-          <p>User: {item.userId?.name}</p>
-          <p>{item.response}</p>
-          <hr />
-        </div>
-      ))}
+      <main className="admin-dashboard-grid">
+        <Link to="/admin/users" className="admin-card">
+          <div className="admin-card-icon">👥</div>
+          <h2>Users</h2>
+          <p>View all users and open each user's learning history.</p>
+        </Link>
+
+        <Link to="/dashboard" className="admin-card">
+          <div className="admin-card-icon">📚</div>
+          <h2>Categories</h2>
+          <p>View learning categories and add new categories.</p>
+        </Link>
+
+        <Link to="/history" className="admin-card">
+          <div className="admin-card-icon">🧠</div>
+          <h2>Learning History</h2>
+          <p>Review generated lessons and AI learning activity.</p>
+        </Link>
+      </main>
     </div>
   );
 }

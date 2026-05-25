@@ -1,0 +1,37 @@
+.subcategory-card {
+  background: rgba(255, 255, 255, 0.94);
+  border-radius: 28px;
+  padding: 30px;
+  min-height: 260px;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 18px 45px rgba(79, 70, 229, 0.16);
+  transition: 0.25s;
+  color: #101828;
+}
+
+.subcategory-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 24px 60px rgba(79, 70, 229, 0.28);
+}
+
+.subcategory-icon {
+  font-size: 58px;
+  margin-bottom: 18px;
+}
+
+.subcategory-card h3 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.subcategory-card p {
+  color: #667085;
+  min-height: 45px;
+}
+
+.subcategory-card button {
+  width: 100%;
+  font-weight: bold;
+  background: linear-gradient(90deg, #2563eb, #c026d3);
+}

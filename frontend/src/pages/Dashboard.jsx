@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import api from "../api/api";
-import { Link } from "react-router-dom";
+import "./Dashboard.css";
 
 function Dashboard() {
+  const navigate = useNavigate();
+
   const [categories, setCategories] = useState([]);
   const [subCategories, setSubCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -15,27 +18,22 @@ function Dashboard() {
   }, []);
 
   const fetchCategories = async () => {
-    try {
-      const res = await api.get("/categories");
-      setCategories(res.data);
-    } catch (err) {
-      console.log(err);
-    }
+    const res = await api.get("/categories");
+    setCategories(res.data);
   };
 
   const handleCategoryChange = async (e) => {
     const categoryId = e.target.value;
     setSelectedCategory(categoryId);
+    setSelectedSubCategory("");
 
-    try {
-      const res = await api.get("/categories/subcategories");
-      const filtered = res.data.filter(
-  (sub) => sub.categoryId._id === categoryId
-);
-      setSubCategories(filtered);
-    } catch (err) {
-      console.log(err);
-    }
+    const res = await api.get("/categories/subcategories");
+
+    const filtered = res.data.filter(
+      (sub) => sub.categoryId._id === categoryId
+    );
+
+    setSubCategories(filtered);
   };
 
   const handleSubmitPrompt = async () => {
@@ -43,65 +41,91 @@ function Dashboard() {
       const token = localStorage.getItem("token");
 
       const res = await api.post(
-  "/prompts",
-  {
-    categoryId: selectedCategory,
-    subCategoryId: selectedSubCategory,
-    prompt
-  },
-  {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  }
-);
+        "/prompts",
+        {
+          categoryId: selectedCategory,
+          subCategoryId: selectedSubCategory,
+          prompt
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
 
-setResponse(res.data.data.response);
+      setResponse(res.data.data.response);
     } catch (err) {
-  console.log("PROMPT ERROR:", err);
-  console.log("RESPONSE:", err.response?.data);
-  alert("Failed to get AI response");
-}
+      alert("Failed to get AI response");
+    }
+  };
+
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/");
   };
 
   return (
-    <div>
-      <h1>AI Learning Dashboard</h1>
-      <Link to="/history">View My History</Link>
-      <select onChange={handleCategoryChange}>
-        <option>Select Category</option>
-        {categories.map((cat) => (
-          <option key={cat._id} value={cat._id}>
-            {cat.name}
-          </option>
-        ))}
-      </select>
+    <div className="dashboard-page">
+      <div className="dashboard-bg-icons">📚 ✨ 💡 📖 ⭐ 🌱</div>
 
-      <select onChange={(e) => setSelectedSubCategory(e.target.value)}>
-        <option>Select SubCategory</option>
-        {subCategories.map((sub) => (
-          <option key={sub._id} value={sub._id}>
-            {sub.name}
-          </option>
-        ))}
-      </select>
+      <div className="dashboard-layout">
+        <div className="dashboard-header">
+          <div>
+            <h1>AI Learning Dashboard</h1>
+            <p>Choose a topic, ask a question, and get a personalized lesson.</p>
+          </div>
 
-      <textarea
-        placeholder="Ask AI something..."
-        value={prompt}
-        onChange={(e) => setPrompt(e.target.value)}
-      />
-
-      <button onClick={handleSubmitPrompt}>
-        Submit Prompt
-      </button>
-
-      {response && (
-        <div>
-          <h2>AI Response:</h2>
-          <p>{response}</p>
+          <div className="dashboard-actions">
+            <Link to="/history" className="history-link">
+              View History
+            </Link>
+            <button onClick={handleLogout} className="logout-btn">
+              Logout
+            </button>
+          </div>
         </div>
-      )}
+
+        <div className="dashboard-card">
+          <h2>Create a New Lesson</h2>
+
+          <select value={selectedCategory} onChange={handleCategoryChange}>
+            <option value="">Select Category</option>
+            {categories.map((cat) => (
+              <option key={cat._id} value={cat._id}>
+                {cat.name}
+              </option>
+            ))}
+          </select>
+
+          <select
+            value={selectedSubCategory}
+            onChange={(e) => setSelectedSubCategory(e.target.value)}
+          >
+            <option value="">Select SubCategory</option>
+            {subCategories.map((sub) => (
+              <option key={sub._id} value={sub._id}>
+                {sub.name}
+              </option>
+            ))}
+          </select>
+
+          <textarea
+            placeholder="Ask AI something you want to learn..."
+            value={prompt}
+            onChange={(e) => setPrompt(e.target.value)}
+          />
+
+          <button onClick={handleSubmitPrompt}>Generate Lesson</button>
+        </div>
+
+        {response && (
+          <div className="response-card">
+            <h2>AI Response</h2>
+            <p>{response}</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

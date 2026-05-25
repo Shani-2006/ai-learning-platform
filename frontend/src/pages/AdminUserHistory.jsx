@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import api from "../api/api";
-import "./History.css";
+import "./AdminUserHistory.css";
 import ReactMarkdown from "react-markdown";
 
-function History() {
+function AdminUserHistory() {
+  const { userId } = useParams();
   const navigate = useNavigate();
+
   const [history, setHistory] = useState([]);
 
   useEffect(() => {
@@ -15,9 +17,8 @@ function History() {
   const fetchHistory = async () => {
     try {
       const token = localStorage.getItem("token");
-      const user = JSON.parse(localStorage.getItem("user"));
 
-      const res = await api.get(`/prompts/history/${user.id}`, {
+      const res = await api.get(`/prompts/history/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -25,7 +26,7 @@ function History() {
 
       setHistory(res.data);
     } catch (err) {
-      alert("Failed to load history");
+      alert("Failed to load user history");
     }
   };
 
@@ -35,32 +36,29 @@ function History() {
   };
 
   return (
-    <div className="history-page">
-      <header className="history-topbar">
-        <div className="history-icons">📚 💡 ✨ 📖 ⭐ 🌱</div>
-
-        <div className="history-title">
-          <h1>📖 My Learning History</h1>
-          <p>Review all the lessons you generated with StudyMate AI</p>
+    <div className="admin-history-page">
+      <header className="admin-history-header">
+        <div>
+          <h1>🧠 User Learning History</h1>
+          <p>Review this user's generated AI lessons and activity.</p>
         </div>
 
-        <div className="history-buttons">
-          <Link to="/dashboard">Dashboard</Link>
+        <div className="admin-history-actions">
+          <Link to="/admin/users">Back</Link>
           <button onClick={handleLogout}>Logout</button>
         </div>
       </header>
 
-      <main className="history-layout">
+      <main className="admin-history-layout">
         {history.length === 0 ? (
-          <div className="empty-history-card">
-            <h2>No lessons yet</h2>
-            <p>Start learning by creating your first AI lesson.</p>
-            <Link to="/dashboard">Create Lesson</Link>
+          <div className="empty-admin-history">
+            <h2>No learning history found</h2>
+            <p>This user hasn't generated any lessons yet.</p>
           </div>
         ) : (
           history.map((item) => (
-            <div className="history-card" key={item._id}>
-              <div className="history-card-header">
+            <div className="admin-history-card" key={item._id}>
+              <div className="admin-history-card-header">
                 <div>
                   <h2>{item.prompt}</h2>
                   <p>
@@ -73,9 +71,9 @@ function History() {
                 </span>
               </div>
 
-             <div className="history-response">
-           <ReactMarkdown>{item.response}</ReactMarkdown>
-               </div>
+             <div className="admin-history-response">
+              <ReactMarkdown>{item.response}</ReactMarkdown>
+             </div>
             </div>
           ))
         )}
@@ -84,4 +82,4 @@ function History() {
   );
 }
 
-export default History;
+export default AdminUserHistory;

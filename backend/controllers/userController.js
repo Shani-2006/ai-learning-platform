@@ -15,6 +15,10 @@ const generateToken = (user) => {
   );
 };
 
+const isValidPhone = (phone) => {
+  return /^\d{1,10}$/.test(phone);
+};
+
 const registerUser = async (req, res, next) => {
   try {
     const { name, phone, password, role } = req.body;
@@ -22,6 +26,12 @@ const registerUser = async (req, res, next) => {
     if (!name || !phone || !password) {
       return res.status(400).json({
         message: "Name, phone and password are required"
+      });
+    }
+
+    if (!isValidPhone(phone)) {
+      return res.status(400).json({
+        message: "Phone must contain digits only and be up to 10 digits"
       });
     }
 
@@ -66,6 +76,12 @@ const loginUser = async (req, res, next) => {
     if (!phone || !password) {
       return res.status(400).json({
         message: "Phone and password are required"
+      });
+    }
+
+    if (!isValidPhone(phone)) {
+      return res.status(400).json({
+        message: "Phone must contain digits only and be up to 10 digits"
       });
     }
 
