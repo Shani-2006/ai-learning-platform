@@ -1,4 +1,4 @@
-.chat-page {
+.lesson-page {
   min-height: 100vh;
   background:
     radial-gradient(circle at top left, #8ea9ff, transparent 35%),
@@ -9,29 +9,29 @@
   padding: 18px;
 }
 
-.chat-topbar {
-  height: 100px;
+.lesson-topbar {
+  min-height: 100px;
   border-radius: 28px;
   background: rgba(255, 255, 255, 0.92);
   box-shadow: 0 18px 45px rgba(79, 70, 229, 0.15);
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1.4fr 1fr;
   align-items: center;
-  padding: 0 35px;
+  padding: 22px 35px;
   margin-bottom: 24px;
 }
 
-.chat-icons {
+.lesson-icons {
   font-size: 30px;
   display: flex;
-  gap: 28px;
+  gap: 24px;
 }
 
-.chat-title {
+.lesson-title {
   text-align: center;
 }
 
-.chat-title h1 {
+.lesson-title h1 {
   margin: 0;
   font-size: 34px;
   background: linear-gradient(90deg, #7c3aed, #2563eb);
@@ -39,49 +39,48 @@
   color: transparent;
 }
 
-.chat-title p {
-  margin: 4px 0 0;
+.lesson-title p {
+  margin: 6px 0 0;
   color: #667085;
 }
 
-.chat-buttons {
+.lesson-buttons {
   display: flex;
   justify-content: flex-end;
   gap: 14px;
 }
 
-.chat-buttons a,
-.chat-buttons button {
+.lesson-buttons a,
+.lesson-buttons button {
   width: auto;
   padding: 12px 22px;
   border-radius: 12px;
   font-weight: bold;
 }
 
-.chat-buttons a {
+.lesson-buttons a {
   background: #eef2ff;
   color: #4f46e5;
 }
 
-.chat-buttons button {
+.lesson-buttons button {
   background: #fb7185;
 }
 
-.chat-layout {
+.lesson-layout {
   display: grid;
   grid-template-columns: 280px 1fr 300px;
   gap: 24px;
 }
 
-.left-panel,
-.right-panel {
+.lesson-side {
   display: flex;
   flex-direction: column;
   gap: 24px;
 }
 
 .side-card {
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.92);
   border-radius: 28px;
   padding: 26px;
   box-shadow: 0 18px 45px rgba(79, 70, 229, 0.14);
@@ -105,12 +104,15 @@
   margin-bottom: 8px;
 }
 
-.topic-card p {
+.topic-card p,
+.side-card p {
   color: #667085;
+  line-height: 1.6;
 }
 
-.topic-card a {
-  display: inline-block;
+.topic-card a,
+.side-card a {
+  display: block;
   margin-top: 14px;
   padding: 12px 18px;
   border-radius: 12px;
@@ -119,183 +121,125 @@
   font-weight: bold;
 }
 
-.progress-circle {
-  width: 115px;
-  height: 115px;
-  margin: 20px auto;
-  border-radius: 50%;
-  border: 12px solid #7c3aed;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 26px;
-  font-weight: bold;
-  color: #4f46e5;
-  background: white;
+.side-card button {
+  width: 100%;
+  margin-top: 14px;
+  background: #fb7185;
 }
 
-.tip-card p {
-  line-height: 1.6;
-  color: #475467;
+.lesson-main {
+  min-height: 720px;
 }
 
-.chat-center {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
+.lesson-form-card,
+.lesson-loading-card,
+.lesson-article {
+  background: rgba(255, 255, 255, 0.94);
+  border-radius: 32px;
+  padding: 42px;
+  box-shadow: 0 22px 60px rgba(79, 70, 229, 0.18);
 }
 
-.messages-area {
-  min-height: 680px;
-  max-height: 680px;
-  overflow-y: auto;
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 30px;
-  box-shadow: 0 20px 55px rgba(79, 70, 229, 0.16);
-  padding: 35px;
-}
-
-.message-row {
-  display: flex;
-  gap: 14px;
+.lesson-form-card h2 {
+  font-size: 32px;
   margin-bottom: 24px;
-  align-items: flex-start;
-}
-
-.user-row {
-  flex-direction: row-reverse;
-}
-
-.avatar {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: #eef2ff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 26px;
-}
-
-.message-bubble {
-  max-width: 70%;
-  padding: 20px 24px;
-  border-radius: 24px;
-  line-height: 1.7;
-  box-shadow: 0 12px 30px rgba(79, 70, 229, 0.12);
-}
-
-.message-bubble.user {
-  background: #f1eaff;
-}
-
-.message-bubble.ai {
-  background: white;
-  border: 1px solid #e9d5ff;
-}
-
-.message-bubble p {
-  margin: 0 0 10px;
   color: #101828;
 }
 
-.prompt-box {
-  height: 90px;
-  border-radius: 26px;
-  background: rgba(255, 255, 255, 0.95);
-  box-shadow: 0 18px 45px rgba(79, 70, 229, 0.15);
-  display: flex;
-  align-items: center;
-  padding: 14px;
-  gap: 12px;
-}
-
-.prompt-box input {
-  flex: 1;
-  height: 58px;
+.lesson-form-card textarea {
+  min-height: 220px;
   border: 1px solid #d9d6ff;
   color: #101828;
-  margin: 0;
+  background: white;
+  box-shadow: 0 8px 18px rgba(99, 102, 241, 0.08);
 }
 
-.small-icon {
-  width: 55px;
-  height: 55px;
-  background: #f8fafc;
-  color: #475467;
-  font-size: 22px;
-}
-
-.send-btn {
-  width: 62px;
-  height: 62px;
-  border-radius: 18px;
-  font-size: 26px;
-  background: linear-gradient(135deg, #2563eb, #7c3aed);
-}
-
-.topics-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.topics-list li {
-  background: #ffffff;
-  border: 1px solid #e9d5ff;
-  padding: 14px;
-  border-radius: 14px;
-  margin-bottom: 12px;
-  text-align: left;
-}
-
-.resources-card button {
+.lesson-form-card button {
   width: 100%;
-  margin-top: 12px;
-  background: #eef2ff;
-  color: #4f46e5;
+  height: 60px;
+  margin-top: 18px;
   font-weight: bold;
+  font-size: 18px;
+  background: linear-gradient(90deg, #2563eb, #c026d3);
+  box-shadow: 0 14px 30px rgba(99, 102, 241, 0.35);
+}
+
+.lesson-loading-card {
+  text-align: center;
+  color: #7c3aed;
+}
+
+.lesson-article {
+  line-height: 1.8;
+}
+
+.lesson-article-header {
+  border-bottom: 1px solid #e9d5ff;
+  padding-bottom: 20px;
+  margin-bottom: 28px;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.lesson-article-header h2 {
+  margin: 0;
+  font-size: 32px;
+  color: #4f46e5;
+}
+
+.lesson-article-header p {
+  color: #667085;
+}
+
+.lesson-article-header button {
+  width: auto;
+  height: 48px;
+  background: linear-gradient(90deg, #2563eb, #7c3aed);
+}
+
+.lesson-content {
+  color: #344054;
+  font-size: 17px;
+}
+
+.lesson-content h1,
+.lesson-content h2,
+.lesson-content h3 {
+  color: #4f46e5;
+  margin-top: 24px;
+}
+
+.lesson-content ul,
+.lesson-content ol {
+  padding-left: 24px;
+}
+
+.lesson-content li {
+  margin-bottom: 8px;
+}
+
+.lesson-content strong {
+  color: #101828;
 }
 
 @media (max-width: 1100px) {
-  .chat-layout {
+  .lesson-layout {
     grid-template-columns: 1fr;
   }
 
-  .left-panel,
-  .right-panel {
+  .lesson-side {
     display: none;
   }
 
-  .chat-topbar {
+  .lesson-topbar {
     grid-template-columns: 1fr;
-    height: auto;
     gap: 18px;
-    padding: 25px;
+    text-align: center;
   }
 
-  .chat-icons,
-  .chat-buttons {
+  .lesson-icons,
+  .lesson-buttons {
     justify-content: center;
   }
-}
-.loading-message p {
-  color: #7c3aed;
-  font-weight: bold;
-}
-
-.message-bubble.ai h1,
-.message-bubble.ai h2,
-.message-bubble.ai h3 {
-  color: #4f46e5;
-  margin-top: 10px;
-}
-
-.message-bubble.ai ul,
-.message-bubble.ai ol {
-  padding-left: 20px;
-}
-
-.message-bubble.ai li {
-  margin-bottom: 8px;
 }

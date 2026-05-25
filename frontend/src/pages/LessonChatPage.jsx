@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import ReactMarkdown from "react-markdown";
 import api from "../api/api";
 import "./LessonChatPage.css";
-import ReactMarkdown from "react-markdown";
 
 function LessonChatPage() {
   const { categoryId, subCategoryId } = useParams();
@@ -11,17 +11,8 @@ function LessonChatPage() {
   const [category, setCategory] = useState(null);
   const [subCategory, setSubCategory] = useState(null);
   const [prompt, setPrompt] = useState("");
+  const [lesson, setLesson] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
-  const [messages, setMessages] = useState([
-    {
-      sender: "ai",
-      text: `Hello! 👋 I'm StudyMate AI.
-I can help you learn with clear explanations, examples, summaries, and practice questions.
-
-What would you like to learn today?`
-    }
-  ]);
 
   useEffect(() => {
     loadTopicData();
@@ -35,32 +26,31 @@ What would you like to learn today?`
     setSubCategory(subCategoriesRes.data.find((sub) => sub._id === subCategoryId));
   };
 
-
-
-  const handleSend = async () => {
+  const handleGenerateLesson = async () => {
     if (!prompt.trim() || isLoading) return;
 
-    const userMessage = prompt;
-    setPrompt("");
-    setIsLoading(true);
-
-    setMessages((prev) => [...prev, { sender: "user", text: userMessage }]);
-
     try {
+      setIsLoading(true);
+
       const token = localStorage.getItem("token");
 
       const res = await api.post(
         "/prompts",
-        { categoryId, subCategoryId, prompt: userMessage },
-        { headers: { Authorization: `Bearer ${token}` } }
+        {
+          categoryId,
+          subCategoryId,
+          prompt
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
       );
 
-      setMessages((prev) => [
-        ...prev,
-        { sender: "ai", text: res.data.data.response }
-      ]);
+      setLesson(res.data.data.response);
     } catch (err) {
-      alert("Failed to get AI response");
+      alert("Failed to generate lesson");
     } finally {
       setIsLoading(false);
     }
@@ -72,102 +62,97 @@ What would you like to learn today?`
   };
 
   return (
-    <div className="chat-page">
-      <header className="chat-topbar">
-        <div className="chat-icons">📚 💡 ✨ 📖 ⭐ 🌱</div>
+    <div className="lesson-page">
+      <header className="lesson-topbar">
+        <div className="lesson-icons">📚 💡 ✨ 📖 ⭐ 🌱</div>
 
-        <div className="chat-title">
+        <div className="lesson-title">
           <h1>🧠 StudyMate AI</h1>
-          <p>Your AI Learning Companion ✨</p>
+          <p>Create a personalized lesson based on your selected topic</p>
         </div>
 
-        <div className="chat-buttons">
+        <div className="lesson-buttons">
           <Link to="/history">History</Link>
           <button onClick={handleLogout}>Logout</button>
         </div>
       </header>
 
-      <main className="chat-layout">
-        <aside className="left-panel">
+      <main className="lesson-layout">
+        <aside className="lesson-side">
           <div className="side-card topic-card">
             <div className="topic-icon">📘</div>
-            <h3>{category?.name || "Current Topic"}</h3>
-            <p>{subCategory?.name || "Sub Category"}</p>
+            <h3>{category?.name || "Category"}</h3>
+            <p>{subCategory?.name || "SubCategory"}</p>
             <Link to={`/category/${categoryId}`}>← Back to Subcategories</Link>
           </div>
 
-          <div className="side-card tip-card">
+          <div className="side-card">
             <h3>Study Tip 💡</h3>
             <p>
-              Ask focused questions like: "Explain this with examples",
-              "Give me practice questions", or "Summarize this topic".
+              Write what you want to understand, for example:
+              “Explain with examples”, “Give me a beginner lesson”, or
+              “Prepare practice questions”.
             </p>
           </div>
         </aside>
 
-        <section className="chat-center">
-          <div className="messages-area">
-            {messages.map((msg, index) => (
-              <div
-                key={index}
-                className={`message-row ${
-                  msg.sender === "user" ? "user-row" : "ai-row"
-                }`}
-              >
-                <div className="avatar">
-                  {msg.sender === "user" ? "👤" : "🤖"}
+        <section className="lesson-main">
+          {!lesson && (
+            <div className="lesson-form-card">
+              <h2>
+                What would you like to learn today about{" "}
+                {subCategory?.name || "this topic"}?
+              </h2>
+
+              <textarea
+                value={prompt}
+                onChange={(e) => setPrompt(e.target.value)}
+                placeholder={`What would you like to learn today about ${subCategory?.name || "this topic"}?`}
+                disabled={isLoading}
+              />
+
+              <button onClick={handleGenerateLesson} disabled={isLoading}>
+                {isLoading ? "Creating lesson..." : "Create Lesson"}
+              </button>
+            </div>
+          )}
+
+          {isLoading && (
+            <div className="lesson-loading-card">
+              <h2>StudyMate AI is creating your lesson...</h2>
+              <p>Please wait a few seconds ✨</p>
+            </div>
+          )}
+
+          {lesson && !isLoading && (
+            <article className="lesson-article">
+              <div className="lesson-article-header">
+                <div>
+                  <h2>{subCategory?.name} Lesson</h2>
+                  <p>
+                    {category?.name} → {subCategory?.name}
+                  </p>
                 </div>
 
-                <div className={`message-bubble ${msg.sender}`}>
-                  {msg.sender === "ai" ? (
-                    <ReactMarkdown>{msg.text}</ReactMarkdown>
-                      ) : (
-                   <p>{msg.text}</p>
-                     )}
-                </div>
+                <button
+                  onClick={() => {
+                    setLesson("");
+                    setPrompt("");
+                  }}
+                >
+                  Create Another Lesson
+                </button>
               </div>
-            ))}
 
-            {isLoading && (
-              <div className="message-row ai-row">
-                <div className="avatar">🤖</div>
-                <div className="message-bubble ai loading-message">
-                  <p>StudyMate AI is thinking...</p>
-                </div>
+              <div className="lesson-content">
+                <ReactMarkdown>{lesson}</ReactMarkdown>
               </div>
-            )}
-          </div>
-
-          <div className="prompt-box">
-            <button className="small-icon">📎</button>
-
-            <input
-              value={prompt}
-              onChange={(e) => setPrompt(e.target.value)}
-              placeholder="Type your question here..."
-              onKeyDown={(e) => e.key === "Enter" && handleSend()}
-              disabled={isLoading}
-            />
-
-            <button className="send-btn" onClick={handleSend} disabled={isLoading}>
-              ➤
-            </button>
-          </div>
+            </article>
+          )}
         </section>
 
-        <aside className="right-panel">
+        <aside className="lesson-side">
           <div className="side-card">
-            <h3>Lesson Topics</h3>
-            <ul className="topics-list">
-              <li>✅ Clear explanations</li>
-              <li>✅ Examples</li>
-              <li>🟣 Practice questions</li>
-              <li>⚪ Summary</li>
-              <li>⚪ Review</li>
-            </ul>
-          </div>
-
-          <div className="side-card resources-card">
             <h3>Lesson Actions</h3>
             <Link to="/history">View My History</Link>
             <Link to="/dashboard">Choose New Category</Link>
