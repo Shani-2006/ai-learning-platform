@@ -14,7 +14,7 @@ StudyMate AI allows students to select a learning category and subcategory, inte
 - Personalized dashboard
 - Category selection
 - Subcategory learning flow
-- AI-powered lesson chat
+- AI-powered personalized lesson generation
 - Beautiful markdown-rendered AI responses
 - Learning history tracking
 - Responsive modern UI
@@ -120,9 +120,9 @@ Create a `.env` file inside the backend folder:
 
 ```env
 PORT=5000
-MONGO_URI=your_mongodb_connection_string
-OPENAI_API_KEY=your_openai_api_key
-JWT_SECRET=your_secret_key
+MONGO_URI=my_mongodb_connection_string
+OPENAI_API_KEY=my_openai_api_key
+JWT_SECRET=my_secret_key
 JWT_EXPIRES_IN=1d
 ```
 
