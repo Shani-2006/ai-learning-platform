@@ -1,32 +1,57 @@
-# StudyMate AI
+# StudyMate AI 🎓🤖
 
-A full-stack AI learning platform that helps students learn through personalized AI-generated lessons.
+A full-stack AI learning platform designed to help students learn smarter through personalized AI-generated lessons.
+
+StudyMate AI allows students to select a learning category and subcategory, interact with an AI tutor, track learning history, and provides administrators with full management capabilities.
+
+---
 
 ## Features
 
+### Student Features
 - User registration and login
 - JWT authentication
-- Role-based authorization
-- Student dashboard
-- Category and subcategory learning flow
-- AI-powered lesson generation
+- Personalized dashboard
+- Category selection
+- Subcategory learning flow
+- AI-powered lesson chat
+- Beautiful markdown-rendered AI responses
 - Learning history tracking
+- Responsive modern UI
+
+### Admin Features
 - Admin dashboard
-- User management
-- View user learning history
+- View all users
+- View specific user learning history
 - Add categories
+- Edit categories
 - Delete categories
 - Add subcategories
+- Edit subcategories
 - Delete subcategories
+
+### Security
+- Protected frontend routes
 - Protected backend routes
+- Role-based authorization
+- JWT authentication
+- Frontend and backend phone validation
+
+### Technical Features
+- OpenAI integration
+- Prompt engineering for topic-focused educational tutoring
+- React Markdown rendering
 - Swagger API documentation
+- Full CRUD admin management
+
+---
 
 ## Tech Stack
 
 ### Frontend
 - React
 - Vite
-- React Router
+- React Router DOM
 - Axios
 - React Markdown
 - CSS
@@ -39,9 +64,68 @@ A full-stack AI learning platform that helps students learn through personalized
 - JWT
 - bcryptjs
 - OpenAI API
-- Swagger
+- Swagger / OpenAPI
 
-## How to Run
+---
+
+## Screenshots
+
+### Login Page
+![Login](portfolio-screenshots/localhost_5173__1.png)
+
+### Categories Dashboard
+![Categories](portfolio-screenshots/localhost_5173__2.png)
+
+### AI Learning Chat
+![Chat](portfolio-screenshots/localhost_5173__3.png)
+
+### Learning History
+![History](portfolio-screenshots/localhost_5173__4.png)
+
+### Admin Dashboard
+![Admin Dashboard](portfolio-screenshots/localhost_5173__5.png)
+
+### Users Management
+![Users](portfolio-screenshots/localhost_5173__6.png)
+
+### User History
+![User History](portfolio-screenshots/localhost_5173__7.png)
+
+### Add Category
+![Add Category](portfolio-screenshots/localhost_5173__8.png)
+
+### Edit Category
+![Edit Category](portfolio-screenshots/localhost_5173__9.png)
+
+---
+
+## Project Structure
+
+```text
+ai-learning-platform/
+│
+├── backend/
+│   ├── controllers/
+│   ├── middlewares/
+│   ├── models/
+│   ├── routes/
+│   ├── services/
+│   └── app.js
+│
+├── frontend/
+│   ├── src/
+│   │   ├── api/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   └── App.jsx
+│
+├── portfolio-screenshots/
+└── README.md
+```
+
+---
+
+## Installation
 
 ### Backend
 
@@ -59,6 +143,8 @@ npm install
 npm run dev
 ```
 
+---
+
 ## Environment Variables
 
 Create a `.env` file inside the backend folder:
@@ -71,29 +157,32 @@ JWT_SECRET=your_secret_key
 JWT_EXPIRES_IN=1d
 ```
 
-## Main Features
+---
 
-### Student
-- Register
-- Login
-- Choose category
-- Choose subcategory
-- Learn with AI chat
-- View learning history
+## API Documentation
 
-### Admin
-- View users
-- View user learning history
-- Add categories
-- Delete categories
-- Add subcategories
-- Delete subcategories
+Swagger docs available at:
+
+```text
+http://localhost:5000/api-docs
+```
+
+---
 
 ## AI Behavior
 
-StudyMate AI acts as an educational tutor and answers only according to the selected learning topic.
+StudyMate AI acts as a focused educational tutor.
+
+The AI:
+- teaches according to the selected category
+- stays within the chosen learning topic
+- avoids irrelevant answers
+- provides structured readable educational responses
+
+---
 
 ## Author
 
-Shani Rabinsky
-    │   └── App.jsx
+**Shani Rabinsky**
+Software Engineering Student
+AI / Full Stack Developer
