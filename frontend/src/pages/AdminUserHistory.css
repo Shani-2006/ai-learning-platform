@@ -1,0 +1,99 @@
+.admin-history-page {
+  min-height: 100vh;
+  padding: 18px;
+  background:
+    radial-gradient(circle at top left, #8ea9ff, transparent 35%),
+    radial-gradient(circle at top right, #ffe7a8, transparent 30%),
+    radial-gradient(circle at bottom right, #ffb5db, transparent 38%),
+    linear-gradient(135deg, #eef5ff, #fff4fb);
+  color: #101828;
+}
+
+.admin-history-header {
+  min-height: 100px;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 18px 45px rgba(79, 70, 229, 0.15);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 35px;
+  margin-bottom: 28px;
+}
+
+.admin-history-header h1 {
+  margin: 0;
+  font-size: 34px;
+}
+
+.admin-history-header p {
+  color: #667085;
+}
+
+.admin-history-actions {
+  display: flex;
+  gap: 14px;
+}
+
+.admin-history-actions a,
+.admin-history-actions button {
+  width: auto;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-weight: bold;
+}
+
+.admin-history-actions a {
+  background: #eef2ff;
+  color: #4f46e5;
+}
+
+.admin-history-actions button {
+  background: #fb7185;
+}
+
+.admin-history-layout {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.admin-history-card,
+.empty-admin-history {
+  background: rgba(255, 255, 255, 0.94);
+  border-radius: 28px;
+  padding: 30px;
+  margin-bottom: 24px;
+  box-shadow: 0 18px 45px rgba(79, 70, 229, 0.16);
+}
+
+.admin-history-card-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  border-bottom: 1px solid #e9d5ff;
+  padding-bottom: 18px;
+  margin-bottom: 20px;
+}
+
+.admin-history-card-header h2 {
+  margin: 0 0 8px;
+}
+
+.admin-history-card-header p,
+.admin-history-card-header span {
+  color: #667085;
+}
+
+.admin-history-response {
+  line-height: 1.7;
+  color: #344054;
+}
+
+.admin-history-response p {
+  margin-bottom: 12px;
+}
+
+.empty-admin-history {
+  text-align: center;
+  margin-top: 80px;
+}

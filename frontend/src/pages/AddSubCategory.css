@@ -1,0 +1,85 @@
+.add-subcategory-page {
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background:
+    radial-gradient(circle at top left, #8ea9ff, transparent 35%),
+    radial-gradient(circle at top right, #ffe7a8, transparent 30%),
+    radial-gradient(circle at bottom right, #ffb5db, transparent 38%),
+    linear-gradient(135deg, #eef5ff, #fff4fb);
+}
+
+.add-subcategory-page::before {
+  content: "📚 💡 ✨ 📖 ⭐ 🌱";
+  position: absolute;
+  top: 65px;
+  left: 70px;
+  right: 70px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 42px;
+}
+
+.add-subcategory-card {
+  width: 620px;
+  padding: 52px 68px;
+  border-radius: 38px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 25px 70px rgba(79, 70, 229, 0.22);
+  text-align: center;
+  color: #101828;
+  position: relative;
+  z-index: 2;
+}
+
+.add-subcategory-icon {
+  width: 105px;
+  height: 105px;
+  margin: 0 auto 18px;
+  border-radius: 50%;
+  background: #eef2ff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 54px;
+}
+
+.add-subcategory-card h1 {
+  font-size: 38px;
+  margin-bottom: 10px;
+  background: linear-gradient(90deg, #7c3aed, #2563eb);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.add-subcategory-card p {
+  color: #667085;
+  font-size: 17px;
+  margin-bottom: 28px;
+}
+
+.add-subcategory-card input {
+  height: 58px;
+  border: 1px solid #d9d6ff;
+  color: #101828;
+  background: white;
+  box-shadow: 0 8px 18px rgba(99, 102, 241, 0.08);
+}
+
+.add-subcategory-card button {
+  width: 100%;
+  height: 60px;
+  margin: 18px 0 24px;
+  font-weight: bold;
+  font-size: 18px;
+  background: linear-gradient(90deg, #2563eb, #c026d3);
+  box-shadow: 0 14px 30px rgba(99, 102, 241, 0.35);
+}
+
+.add-subcategory-card a {
+  color: #7c3aed;
+  font-weight: bold;
+}

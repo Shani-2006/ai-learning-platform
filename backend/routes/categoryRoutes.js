@@ -1,53 +1,47 @@
-/**
- * @swagger
- * /api/categories:
- *   post:
- *     summary: Create category
- *     tags: [Categories]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               name:
- *                 type: string
- *     responses:
- *       201:
- *         description: Category created
- *
- *   get:
- *     summary: Get all categories
- *     tags: [Categories]
- *     responses:
- *       200:
- *         description: List of categories
- *
- * /api/categories/subcategories:
- *   post:
- *     summary: Create subcategory
- *     tags: [Categories]
- *
- *   get:
- *     summary: Get all subcategories
- *     tags: [Categories]
- */
-
 const express = require("express");
 const router = express.Router();
 
 const {
   createCategory,
   getCategories,
+  updateCategory,
+  deleteCategory,
   createSubCategory,
-  getSubCategories
+  getSubCategories,
+  updateSubCategory,
+  deleteSubCategory
 } = require("../controllers/categoryController");
 
-router.post("/", createCategory);
+const authMiddleware = require("../middlewares/authMiddleware");
+const adminMiddleware = require("../middlewares/adminMiddleware");
+
+router.post("/", authMiddleware, adminMiddleware, createCategory);
 router.get("/", getCategories);
 
-router.post("/subcategories", createSubCategory);
+router.put("/:id", authMiddleware, adminMiddleware, updateCategory);
+router.delete("/:id", authMiddleware, adminMiddleware, deleteCategory);
+
+router.post(
+  "/subcategories",
+  authMiddleware,
+  adminMiddleware,
+  createSubCategory
+);
+
 router.get("/subcategories", getSubCategories);
+
+router.put(
+  "/subcategories/:id",
+  authMiddleware,
+  adminMiddleware,
+  updateSubCategory
+);
+
+router.delete(
+  "/subcategories/:id",
+  authMiddleware,
+  adminMiddleware,
+  deleteSubCategory
+);
 
 module.exports = router;
