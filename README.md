@@ -1,4 +1,4 @@
-# StudyMate AI 🎓🤖
+# StudyMate AI 
 
 A full-stack AI learning platform designed to help students learn smarter through personalized AI-generated lessons.
 
