@@ -128,6 +128,23 @@ JWT_EXPIRES_IN=1d
 
 ---
 
+## Initial Admin Setup
+
+To create the default admin user, run:
+
+```bash
+npm run seed:admin
+```
+
+Default admin credentials:
+
+```text
+Phone: 0500000000
+Password: 123456
+```
+
+---
+
 ## API Documentation
 
 Swagger docs available at:
@@ -149,6 +166,7 @@ The AI:
 - provides structured readable educational responses
 
 ---
+
 
 ## Author
 
