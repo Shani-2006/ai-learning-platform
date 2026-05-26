@@ -12,10 +12,20 @@ function AddSubCategory() {
     e.preventDefault();
 
     try {
-      await api.post("/categories/subcategories", {
-        name,
-        categoryId
-      });
+    const token = localStorage.getItem("token");
+
+await api.post(
+  "/categories/subcategories",
+  {
+    name,
+    categoryId
+  },
+  {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+);
 
       alert("SubCategory added successfully");
       navigate(`/category/${categoryId}`);

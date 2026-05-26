@@ -11,7 +11,17 @@ function AddCategory() {
     e.preventDefault();
 
     try {
-      await api.post("/categories", { name });
+      const token = localStorage.getItem("token");
+
+await api.post(
+  "/categories",
+  { name },
+  {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+);
       alert("Category added successfully");
       navigate("/dashboard");
     } catch (err) {
