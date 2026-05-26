@@ -50,7 +50,8 @@ function LessonChatPage() {
 
       setLesson(res.data.data.response);
     } catch (err) {
-      alert("Failed to generate lesson");
+      console.log(err);
+      alert(err.response?.data?.message ||"Failed to generate lesson");
     } finally {
       setIsLoading(false);
     }
